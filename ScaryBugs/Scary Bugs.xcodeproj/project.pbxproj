@@ -36,7 +36,6 @@
 		A2CF3E221C81C7E5004D0E6F /* BugSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CF3E211C81C7E5004D0E6F /* BugSection.swift */; };
 		A2CF3E241C81C916004D0E6F /* ScaryBugsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CF3E231C81C916004D0E6F /* ScaryBugsTableViewController.swift */; };
 		D34F180C1BC4506900A09B8C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34F180B1BC4506900A09B8C /* AppDelegate.swift */; };
-		D34F180E1BC4506900A09B8C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34F180D1BC4506900A09B8C /* ViewController.swift */; };
 		D34F18111BC4506900A09B8C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D34F180F1BC4506900A09B8C /* Main.storyboard */; };
 		D34F18131BC4506900A09B8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D34F18121BC4506900A09B8C /* Assets.xcassets */; };
 		D34F18161BC4506900A09B8C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D34F18141BC4506900A09B8C /* LaunchScreen.storyboard */; };
@@ -73,7 +72,6 @@
 		A2CF3E231C81C916004D0E6F /* ScaryBugsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScaryBugsTableViewController.swift; sourceTree = "<group>"; };
 		D34F18081BC4506900A09B8C /* Scary Bugs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Scary Bugs.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D34F180B1BC4506900A09B8C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D34F180D1BC4506900A09B8C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D34F18101BC4506900A09B8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D34F18121BC4506900A09B8C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D34F18151BC4506900A09B8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -153,7 +151,6 @@
 			children = (
 				A2A3BCE91C81ADE4006BE4BC /* Model */,
 				D34F180B1BC4506900A09B8C /* AppDelegate.swift */,
-				D34F180D1BC4506900A09B8C /* ViewController.swift */,
 				A2CF3E231C81C916004D0E6F /* ScaryBugsTableViewController.swift */,
 				D34F180F1BC4506900A09B8C /* Main.storyboard */,
 				A2A3BCB41C81AA6A006BE4BC /* Challenge Resources */,
@@ -259,7 +256,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D34F180E1BC4506900A09B8C /* ViewController.swift in Sources */,
 				A2CF3E241C81C916004D0E6F /* ScaryBugsTableViewController.swift in Sources */,
 				D34F180C1BC4506900A09B8C /* AppDelegate.swift in Sources */,
 				A2CF3E221C81C7E5004D0E6F /* BugSection.swift in Sources */,

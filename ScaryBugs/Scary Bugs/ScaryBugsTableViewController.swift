@@ -19,6 +19,7 @@ class ScaryBugsTableViewController: UITableViewController {
         
         navigationItem.rightBarButtonItem = editButtonItem()
         setupBugs()
+        tableView.allowsSelectionDuringEditing = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,18 +39,31 @@ class ScaryBugsTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let adjustment = editing ? 1 : 0
         let bugSection = bugSections[section]
-        return bugSection.bugs.count
+        return bugSection.bugs.count + adjustment
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BugCell", forIndexPath: indexPath)
         let bugSection = bugSections[indexPath.section]
-        let bug = bugSection.bugs[indexPath.row]
-        cell.textLabel?.text = bug.name
-        cell.detailTextLabel?.text = ScaryBug.scaryFactorToString(bug.howScary)
-        if let imageView = cell.imageView, bugImage = bug.image {
-            imageView.image = bugImage
+        
+        if indexPath.row >= bugSection.bugs.count && editing {
+            cell.textLabel?.text = "Add Bug"
+            cell.detailTextLabel?.text = nil
+            cell.imageView?.image = nil
+        } else {
+            let bug = bugSection.bugs[indexPath.row]
+            cell.textLabel?.text = bug.name
+            cell.detailTextLabel?.text = ScaryBug.scaryFactorToString(bug.howScary)
+            guard let imageView = cell.imageView else {
+                return cell
+            }
+            if let bugImage = bug.image {
+                imageView.image = bugImage
+            } else {
+                imageView.image = nil
+            }
         }
 
         return cell
@@ -61,6 +75,55 @@ class ScaryBugsTableViewController: UITableViewController {
             let bugSection = bugSections[indexPath.section]
             bugSection.bugs.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        } else if editingStyle == .Insert {
+            let bugSection = bugSections[indexPath.section]
+            let newBug = ScaryBug(withName: "New Bug", imageName: nil, howScary: bugSection.howScary)
+            bugSection.bugs.append(newBug)
+            tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        }
+    }
+    
+    override func setEditing(editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        if editing {
+            tableView.beginUpdates()
+            for (index, bugSection) in bugSections.enumerate() {
+                let indexPath = NSIndexPath(forRow: bugSection.bugs.count, inSection: index)
+                tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            }
+            tableView.endUpdates()
+        } else {
+            tableView.beginUpdates()
+            for (index, bugSection) in bugSections.enumerate() {
+                let indexPath = NSIndexPath(forRow: bugSection.bugs.count, inSection: index)
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            }
+            tableView.endUpdates()
+        }
+    }
+    
+    override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        let bugSection = bugSections[indexPath.section]
+        if indexPath.row >= bugSection.bugs.count {
+            return .Insert
+        } else {
+            return .Delete
+        }
+    }
+    
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        let bugSection = bugSections[indexPath.section]
+        if self.editing && indexPath.row < bugSection.bugs.count {
+            return nil
+        }
+        return indexPath
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let bugSection = bugSections[indexPath.section]
+        if self.editing && indexPath.row >= bugSection.bugs.count {
+            self.tableView(tableView, commitEditingStyle: .Insert, forRowAtIndexPath: indexPath)
         }
     }
     
@@ -80,49 +143,4 @@ class ScaryBugsTableViewController: UITableViewController {
         }
     }
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
